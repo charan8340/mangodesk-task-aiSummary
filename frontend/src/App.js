@@ -10,7 +10,7 @@ function App() {
   const API_URL =
     process.env.REACT_APP_API_URL || "http://localhost:5000";
 
-  const generateSummary = async () => {
+  const generateSummary = async () => { 
     const res = await fetch(`${API_URL}/generate-summary`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
