@@ -22,7 +22,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // === Root route ===
 app.get("/", (req, res) => {
-  res.send("AI Meeting Summarizer API is running");
+  res.send("AI Meeting Summarizer API is running check");
 });
 
 // === Route 1: Generate Summary ===
