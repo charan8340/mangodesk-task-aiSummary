@@ -10,8 +10,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // === Init Groq client ===
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+});
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // === Route 1: Generate Summary ===
 app.post("/generate-summary", async (req, res) => {
