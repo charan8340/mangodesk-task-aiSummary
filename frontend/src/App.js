@@ -11,7 +11,7 @@ function App() {
     process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const generateSummary = async () => { 
-    const res = await fetch(`${API_URL}/generate-summary`, {
+    const res = await fetch(`${API_URL}generate-summary`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transcript, instruction }),
@@ -21,7 +21,7 @@ function App() {
   };
 
   const sendEmail = async () => {
-    const res = await fetch(`${API_URL}/send-email`, {
+    const res = await fetch(`${API_URL}send-email`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ summary, recipients: recipients.split(",") }),
