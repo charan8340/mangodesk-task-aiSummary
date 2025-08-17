@@ -8,9 +8,11 @@ const app = express();
 
 const cors = require("cors");
 
+app.use(cors()); // allows all origins
+
 app.use(
   cors({
-    origin: "https://mangodesk-task-ai-summary-mqjt-1260kyi0w-charan8340s-projects.vercel.app",
+    origin: "https://mangodesk-task-ai-summary-4tog.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -22,8 +24,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use("/api/ai", aiRoutes);
-app.use("/api/user", userRoutes);
+const aiRoutes = require("./routes/aiRoutes");
+const userRoutes = require("./routes/userRoutes");
+
+app.use("/", aiRoutes);
+app.use("/", userRoutes);
 
 export default app;
 
