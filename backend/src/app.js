@@ -10,15 +10,6 @@ const cors = require("cors");
 
 app.use(cors());
 
-// app.use(
-//   cors({
-//     origin: "https://mangodesk-task-ai-summary-mqjt-1260kyi0w-charan8340s-projects.vercel.app",
-//     methods: ["GET", "POST"],
-//     credentials: true,
-//   })
-// );
-
-// Middlewares
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

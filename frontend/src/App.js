@@ -6,10 +6,9 @@ function App() {
   const [summary, setSummary] = useState("");
   const [recipients, setRecipients] = useState("");
 
-  // ✅ Use env variable with fallback to deployed backend URL
+  // ✅ Use env var in prod, fallback to localhost in dev
   const API_URL =
-    process.env.REACT_APP_API_URL ||
-    "https://mangodesk-task-aisummary-4.onrender.com";
+    process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const generateSummary = async () => {
     const res = await fetch(`${API_URL}/generate-summary`, {

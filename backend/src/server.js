@@ -3,18 +3,24 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import nodemailer from "nodemailer";
 import { Groq } from "groq-sdk";
-import 'dotenv/config';
+import "dotenv/config";
 
 const app = express();
-app.use(cors({
-  origin: ["https://mangodesk-task-ai-summary-76ma.vercel.app"], 
-  methods: ["GET", "POST"],
-  credentials: true,
-}));
+
+// ✅ Allow all origins (quick fix for CORS)
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(bodyParser.json());
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
+// === Root route ===
 app.get("/", (req, res) => {
   res.send("AI Meeting Summarizer API is running");
 });
@@ -25,16 +31,20 @@ app.post("/generate-summary", async (req, res) => {
     const { transcript, instruction } = req.body;
 
     const completion = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instant", // change model if needed
+      model: "llama-3.1-8b-instant",
       messages: [
         { role: "system", content: "You are a meeting summarizer." },
-        { role: "user", content: `Transcript:\n${transcript}\n\nInstruction: ${instruction}` },
+        {
+          role: "user",
+          content: `Transcript:\n${transcript}\n\nInstruction: ${instruction}`,
+        },
       ],
       max_completion_tokens: 1024,
       temperature: 0.7,
     });
 
-    const summary = completion.choices[0]?.message?.content || "No summary generated.";
+    const summary =
+      completion.choices[0]?.message?.content || "No summary generated.";
 
     res.json({ summary });
   } catch (err) {
