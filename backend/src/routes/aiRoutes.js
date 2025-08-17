@@ -1,9 +1,9 @@
 import express from "express";
-import aiController from "../controllers/aiController.js";
+import { summarizeText } from "../controllers/aiController.js";
 
 const router = express.Router();
 
-// POST /api/ai/summary
-router.post("/summary", aiController.getSummary);
+// POST route for generating AI summaries
+router.post("/summarize", summarizeText);
 
 export default router;
