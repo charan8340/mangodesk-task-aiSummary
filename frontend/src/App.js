@@ -6,10 +6,13 @@ function App() {
   const [summary, setSummary] = useState("");
   const [recipients, setRecipients] = useState("");
 
-
+  // ✅ Use env variable with fallback to deployed backend URL
+  const API_URL =
+    process.env.REACT_APP_API_URL ||
+    "https://mangodesk-task-aisummary-4.onrender.com";
 
   const generateSummary = async () => {
-    const res = await fetch("https://mangodesk-task-aisummary-4.onrender.com/generate-summary", {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+    const res = await fetch(`${API_URL}/generate-summary`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transcript, instruction }),
@@ -19,7 +22,7 @@ function App() {
   };
 
   const sendEmail = async () => {
-    const res = await fetch("https://mangodesk-task-aisummary-4.onrender.com/send-email", {
+    const res = await fetch(`${API_URL}/send-email`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ summary, recipients: recipients.split(",") }),
